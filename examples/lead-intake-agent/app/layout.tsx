@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans_Thai, JetBrains_Mono, Manrope, Rubik } from "next/font/google";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,19 +8,17 @@ import { getI18n } from "@/lib/i18n/server";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const sans = Geist({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: "variable",
+// Mintel UI fonts: Manrope for text, Rubik for headings, IBM Plex Sans Thai
+// for Thai, JetBrains Mono for code. globals.css reads these variables.
+const sans = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap" });
+const heading = Rubik({ variable: "--font-rubik", subsets: ["latin"], display: "swap" });
+const thai = IBM_Plex_Sans_Thai({
+  variable: "--font-plex-thai",
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
-
-const mono = Geist_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: "variable",
-  display: "swap",
-});
+const mono = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "Lead Intake Bot",
@@ -34,7 +32,7 @@ const THEME_INIT_SCRIPT = `(function(){var d=false;try{var t=localStorage.getIte
 export default async function RootLayout({ children }: { readonly children: ReactNode }) {
   const { locale, t } = await getI18n();
   return (
-    <html className={cn(sans.variable, mono.variable)} lang={locale} suppressHydrationWarning>
+    <html className={cn(sans.variable, heading.variable, thai.variable, mono.variable)} lang={locale} suppressHydrationWarning>
       <body>
         <I18nProvider locale={locale} t={t}>
           <TooltipProvider>{children}</TooltipProvider>

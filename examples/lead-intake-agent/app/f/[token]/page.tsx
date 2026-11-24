@@ -23,7 +23,7 @@ export default async function LeadFormPage({ params }: { readonly params: Promis
   const lead = check.ok ? await desk.getLeadForForm(check.leadId).catch(() => null) : null;
 
   return (
-    <main className="flex min-h-dvh justify-center bg-background px-4 py-10">
+    <main className="flex min-h-dvh justify-center bg-grouped px-4 py-10">
       <ThemeToggle className="fixed top-3 right-6" />
       <div className="w-full max-w-lg">
         {lead ? (

@@ -16,7 +16,7 @@
 |---|---|---|
 | [`packages/eve`](packages/eve) | eve extension: ช่องทางอีเมล Resend, tool `enrich_sender` / `save_lead`, คำสั่ง AI, งานประจำวัน และ `./desk` ให้หน้าเว็บใช้ · The eve extension: Resend email channel, tools, instructions, daily job, and a `./desk` export for web pages | mount ใน `agent/extensions/` ([ดูวิธี](#ใช้เป็น-extension-ใน-agent-ของคุณ) · [how](#use-it-as-an-eve-extension)) |
 | [`packages/core`](packages/core) | กติกาล้วน ไม่ผูก framework: ฟิลด์ lead, คะแนน, ตรวจเมลอัตโนมัติ, token ที่เซ็นแล้ว · Framework-free rules: lead fields, scores, automated-email check, signed tokens | `import … from "@eve-lead-intake-extension/core"` |
-| [`examples/lead-intake-agent`](examples/lead-intake-agent) | แอปเต็มที่ใช้ extension นี้: Next.js หน้า Leads, ตั้งค่าฟิลด์, ฟอร์มลูกค้า, หน้าทดสอบ AI · The complete app built on the extension | ปุ่ม Deploy ด้านล่าง · the Deploy button below |
+| [`examples/lead-intake-agent`](examples/lead-intake-agent) | แอปเต็มที่ใช้ extension นี้: Next.js หน้า Leads, ตั้งค่าฟิลด์, ฟอร์มลูกค้า, หน้าทดสอบ AI หน้าตาใช้ [Mintel UI](https://mintel-ui.vercel.app) · The complete app built on the extension, styled with Mintel UI | ปุ่ม Deploy ด้านล่าง · the Deploy button below |
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension&root-directory=examples%2Flead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=AI_GATEWAY_API_KEY%2CCONTEXT_API_KEY%2CRESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=AI_GATEWAY_API_KEY%3A%20Vercel%20%3E%20AI%20Gateway%20%3E%20API%20Keys.%20CONTEXT_API_KEY%3A%20context.dev%20dashboard.%20RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page%3B%20afterwards%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
@@ -159,6 +159,8 @@ agent จะได้ `lead__save_lead`, `lead__enrich_sender`, ช่องท�
 | `/f/<token>` | **หน้าสาธารณะ** ฟอร์มให้ลูกค้ายืนยันข้อมูลติดต่อ (ลิงก์อยู่ในเมลตอบกลับ) |
 
 **ภาษา:** ทุกหน้ามีปุ่ม **TH / EN** มุมขวาบน (จำค่าไว้ในคุกกี้) ถ้ายังไม่เคยเลือก ระบบดูภาษาของเบราว์เซอร์ (ค่าเริ่มต้นไทย) ฟอร์มลูกค้าจึงขึ้นภาษาอังกฤษให้ลูกค้าต่างชาติเอง ชื่อฟิลด์และตัวเลือกภาษาอังกฤษตั้งได้ที่หน้าตั้งค่าฟิลด์ · ข้อความที่ AI เขียน (เช่น เหตุผลของคะแนน) เป็นภาษาไทย เปลี่ยนได้ด้วย `LEAD_DATA_LANGUAGE`
+
+**หน้าตา:** ใช้ design system [Mintel UI](https://mintel-ui.vercel.app) (สีแบรนด์ทั้งโหมดสว่าง/มืด, ฟอนต์ Manrope + Rubik + IBM Plex Sans Thai) ผ่าน shadcn registry ที่ลงทะเบียนไว้ใน `examples/lead-intake-agent/components.json` เพิ่ม component ได้ด้วย `npx shadcn@latest add @mintel/<ชื่อ>` (รันในโฟลเดอร์ `examples/lead-intake-agent`)
 
 ### การทำงาน
 
@@ -401,6 +403,8 @@ The saved list lives in the database (`app_settings`); [`packages/core/src/lead-
 
 **Language:** every page has a **TH / EN** switch in the top right (kept in a cookie). Until someone picks one, the browser's language decides (Thai by default), so foreign customers see the form in English. Set English field names and options on the field settings page. Text the AI writes (e.g. the score reason) is in Thai; change it with `LEAD_DATA_LANGUAGE`.
 
+**Look and feel:** the pages use the [Mintel UI](https://mintel-ui.vercel.app) design system (brand colors in light and dark, Manrope + Rubik + IBM Plex Sans Thai) through the shadcn registry listed in `examples/lead-intake-agent/components.json`. Add more with `npx shadcn@latest add @mintel/<name>` from `examples/lead-intake-agent`.
+
 ### Environment variables
 
 Every variable is described in [`.env.example`](examples/lead-intake-agent/.env.example). **Never commit `.env.local` or real values.** Required: `DATABASE_URL` (or `POSTGRES_URL`), `CONTEXT_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`, `RESEND_WEBHOOK_SECRET` (without it no email is received), `ADMIN_USERNAME`, `ADMIN_PASSWORD`, plus AI access (`AI_GATEWAY_API_KEY` outside Vercel, or `GOOGLE_GENERATIVE_AI_API_KEY`). Recommended: `RESEND_REPLY_TO`. Optional: `ADMIN_SESSION_SECRET` (generated and stored in the database when unset; changing it logs everyone out and breaks form links already sent), `AI_MODEL`, `AI_FALLBACK_MODEL`, `PUBLIC_APP_URL`, `COMPANY_NAME`, `PRIVACY_POLICY_URL`, `LEAD_FORM_SECRET`, `LEAD_DATA_LANGUAGE` (language of the text the AI writes, default `Thai`), and `SIMULATE_AI_OUTAGE` (demos only). Changes in Vercel take effect after a **Redeploy**.
@@ -459,7 +463,7 @@ examples/lead-intake-agent/   the complete app (what the Deploy button installs)
 
 ### Tech stack
 
-[eve](https://eve.dev) · Next.js 16 (App Router) · React 19 · Vercel AI SDK 7 + AI Gateway · Resend (`@resend/chat-sdk-adapter`) · Postgres (any provider; `postgres.js`, chat state via `@chat-adapter/state-pg`) · Zod 4 · Tailwind CSS 4 · exceljs
+[eve](https://eve.dev) · Next.js 16 (App Router) · React 19 · Vercel AI SDK 7 + AI Gateway · Resend (`@resend/chat-sdk-adapter`) · Postgres (any provider; `postgres.js`, chat state via `@chat-adapter/state-pg`) · Zod 4 · Tailwind CSS 4 · [Mintel UI](https://mintel-ui.vercel.app) (theme and components through its shadcn registry) · exceljs
 
 ### Limitations
 

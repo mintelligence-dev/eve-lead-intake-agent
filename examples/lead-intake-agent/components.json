@@ -18,5 +18,7 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@mintel": "https://mintel-ui.vercel.app/r/{name}.json"
+  }
 }
