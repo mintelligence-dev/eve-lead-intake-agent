@@ -2,7 +2,11 @@
 
 An [eve](https://eve.dev) extension that reads inbound customer emails, scores and saves each lead (Hot / Warm / Cold), and replies with a short acknowledgment and a contact-form link. Leads, settings and email thread state live in Postgres; email goes through [Resend](https://resend.com).
 
-> Not published to npm yet. Use it through the [repository's](https://github.com/mintelligence-dev/eve-lead-intake-extension) npm workspace for now.
+```bash
+npm install @eve-lead-intake-extension/eve
+```
+
+Needs eve 1.4 or later and Node.js 24. Source, the example app and the Thai docs are in the [repository](https://github.com/mintelligence-dev/eve-lead-intake-extension).
 
 ## Mount it
 

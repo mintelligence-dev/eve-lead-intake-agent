@@ -8,6 +8,10 @@ The lead intake rules on their own, with no framework and no runtime dependencie
 - **Prompt format:** `leadPrompt()` and `parseLeadPrompt()`, the email shape the extension's instructions read.
 - **Signed tokens:** `createFormToken` / `verifyFormToken` for customer form links bound to one lead, `createSessionToken` / `verifySessionToken` for admin cookies. They use Web Crypto only.
 
+```bash
+npm install @eve-lead-intake-extension/core
+```
+
 ```ts
 import { isAutomatedEmail, leadPrompt } from "@eve-lead-intake-extension/core";
 ```

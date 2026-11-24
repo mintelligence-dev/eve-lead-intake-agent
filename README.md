@@ -7,6 +7,8 @@ Read inbound customer emails, score and save each lead (Hot / Warm / Cold), and 
 [![eve](https://img.shields.io/badge/eve-1.4-black)](https://eve.dev)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![eve on npm](https://img.shields.io/npm/v/@eve-lead-intake-extension/eve?label=eve)](https://www.npmjs.com/package/@eve-lead-intake-extension/eve)
+[![core on npm](https://img.shields.io/npm/v/@eve-lead-intake-extension/core?label=core)](https://www.npmjs.com/package/@eve-lead-intake-extension/core)
 
 **English** · [ภาษาไทย](README.th.md)
 
@@ -18,8 +20,8 @@ Read inbound customer emails, score and save each lead (Hot / Warm / Cold), and 
 
 | | What it is | How to use it |
 |---|---|---|
-| [`packages/eve`](packages/eve) | The eve extension: a Resend email channel, the `enrich_sender` and `save_lead` tools, the intake instructions, a daily job, and a `./desk` export for web pages | Mount it in `agent/extensions/` ([Quick start](#quick-start-add-it-to-your-agent)) |
-| [`packages/core`](packages/core) | The rules on their own, with no framework and no dependencies: lead fields, scores, automated-email detection, signed tokens | `import … from "@eve-lead-intake-extension/core"` |
+| [`packages/eve`](packages/eve) | The eve extension: a Resend email channel, the `enrich_sender` and `save_lead` tools, the intake instructions, a daily job, and a `./desk` export for web pages | `npm install @eve-lead-intake-extension/eve`, then mount it ([Quick start](#quick-start-add-it-to-your-agent)) |
+| [`packages/core`](packages/core) | The rules on their own, with no framework and no dependencies: lead fields, scores, automated-email detection, signed tokens | `npm install @eve-lead-intake-extension/core` |
 | [`examples/lead-intake-agent`](examples/lead-intake-agent) | A complete app built on the extension: leads table, field settings, customer form and AI test page, styled with [Mintel UI](https://mintel-ui.vercel.app) | [Deploy your own copy](#deploy-the-example-app) |
 
 ## How it works
@@ -54,7 +56,13 @@ Customer ◀── short reply + contact-form link ── Resend ◀┘
 
 ## Quick start: add it to your agent
 
-Already have an eve agent? Mount the extension with one file:
+Already have an eve agent? Install the extension:
+
+```bash
+npm install @eve-lead-intake-extension/eve
+```
+
+Then mount it with one file:
 
 ```ts
 // agent/extensions/lead.ts
@@ -73,7 +81,7 @@ Your agent gets `lead__save_lead`, `lead__enrich_sender`, the `lead__resend` cha
 
 Web pages and other code outside the agent use `openLeadDesk()` from `@eve-lead-intake-extension/eve/desk`, with the same settings, to read and change leads, fields, form links and admin sessions. The example app shares one config module between the mount and the desk: [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) and [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts). Every setting is described in [`packages/eve`](packages/eve#settings).
 
-> Not published to npm yet. For now, use it through this repository's npm workspace (see [Develop](#develop)).
+Needs eve 1.4 or later and Node.js 24.
 
 ## Deploy the example app
 

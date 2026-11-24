@@ -7,6 +7,8 @@
 [![eve](https://img.shields.io/badge/eve-1.4-black)](https://eve.dev)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![eve on npm](https://img.shields.io/npm/v/@eve-lead-intake-extension/eve?label=eve)](https://www.npmjs.com/package/@eve-lead-intake-extension/eve)
+[![core on npm](https://img.shields.io/npm/v/@eve-lead-intake-extension/core?label=core)](https://www.npmjs.com/package/@eve-lead-intake-extension/core)
 
 [English](README.md) · **ภาษาไทย**
 
@@ -18,8 +20,8 @@
 
 | | คืออะไร | ใช้ยังไง |
 |---|---|---|
-| [`packages/eve`](packages/eve) | ตัว eve extension: ช่องทางอีเมล Resend, tool `enrich_sender` และ `save_lead`, คำสั่ง AI สำหรับรับ lead, งานประจำวัน และ `./desk` ให้หน้าเว็บใช้ | mount ใน `agent/extensions/` ([เริ่มใช้](#เริ่มใช้-ใส่ใน-agent-ของคุณ)) |
-| [`packages/core`](packages/core) | กติกาล้วนๆ ไม่ผูก framework ไม่มี dependency: ฟิลด์ lead, คะแนน, ตรวจเมลอัตโนมัติ, token ที่เซ็นกันปลอม | `import … from "@eve-lead-intake-extension/core"` |
+| [`packages/eve`](packages/eve) | ตัว eve extension: ช่องทางอีเมล Resend, tool `enrich_sender` และ `save_lead`, คำสั่ง AI สำหรับรับ lead, งานประจำวัน และ `./desk` ให้หน้าเว็บใช้ | `npm install @eve-lead-intake-extension/eve` แล้ว mount ([เริ่มใช้](#เริ่มใช้-ใส่ใน-agent-ของคุณ)) |
+| [`packages/core`](packages/core) | กติกาล้วนๆ ไม่ผูก framework ไม่มี dependency: ฟิลด์ lead, คะแนน, ตรวจเมลอัตโนมัติ, token ที่เซ็นกันปลอม | `npm install @eve-lead-intake-extension/core` |
 | [`examples/lead-intake-agent`](examples/lead-intake-agent) | แอปเต็มที่ใช้ extension นี้: ตาราง lead, ตั้งค่าฟิลด์, ฟอร์มลูกค้า, หน้าทดสอบ AI หน้าตาใช้ [Mintel UI](https://mintel-ui.vercel.app) | [ติดตั้งของคุณเอง](#ติดตั้งแอปตัวอย่าง) |
 
 ## ทำงานยังไง
@@ -54,7 +56,13 @@
 
 ## เริ่มใช้: ใส่ใน agent ของคุณ
 
-มี eve agent อยู่แล้ว ใส่ extension ด้วยไฟล์เดียว:
+มี eve agent อยู่แล้ว ติดตั้ง extension:
+
+```bash
+npm install @eve-lead-intake-extension/eve
+```
+
+แล้ว mount ด้วยไฟล์เดียว:
 
 ```ts
 // agent/extensions/lead.ts
@@ -73,7 +81,7 @@ agent จะได้ `lead__save_lead`, `lead__enrich_sender`, ช่องท�
 
 หน้าเว็บหรือโค้ดที่ไม่ได้รันใน agent ใช้ `openLeadDesk()` จาก `@eve-lead-intake-extension/eve/desk` ด้วยค่าเดียวกัน เพื่ออ่านและแก้ lead, ฟิลด์, ลิงก์ฟอร์ม และ session ผู้ดูแล แอปตัวอย่างใช้ config ไฟล์เดียวร่วมกันทั้ง mount และ desk: [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) และ [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts) ดูค่าที่ตั้งได้ทั้งหมดใน [`packages/eve`](packages/eve#settings)
 
-> ยังไม่ได้เผยแพร่ขึ้น npm ตอนนี้ใช้ผ่าน npm workspace ใน repo นี้ (ดู[พัฒนาต่อ](#พัฒนาต่อ))
+ต้องใช้ eve 1.4 ขึ้นไป และ Node.js 24
 
 ## ติดตั้งแอปตัวอย่าง
 
