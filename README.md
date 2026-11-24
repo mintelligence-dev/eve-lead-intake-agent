@@ -16,6 +16,10 @@ Read inbound customer emails, score and save each lead (Hot / Warm / Cold), and 
 
 <sub>Screenshot data is made up.</sub>
 
+Deploy your own copy of the example app. The button asks for your Resend key, sender address and admin login, and sets up the Postgres database ([step by step](#deploy-the-example-app)):
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension&root-directory=examples%2Flead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=RESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page.%20After%20deploying%2C%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension%23set-up-resend&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+
 ## What is in this repository
 
 | | What it is | How to use it |
@@ -196,7 +200,7 @@ examples/lead-intake-agent/     the example app
 
 ## Contributing
 
-Issues and pull requests are welcome. Run `npm run typecheck`, `npm test` and `npm run build` before opening a pull request, and open an issue first for larger changes. Never commit keys or `.env.local`.
+Issues and pull requests are welcome. Run `npm run typecheck`, `npm test` and `npm run build` before opening a pull request, and open an issue first for larger changes. Never commit keys or `.env.local`. See [CONTRIBUTING.md](CONTRIBUTING.md) for the rules, the [Code of Conduct](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md) to report a vulnerability privately.
 
 ## Contributors
 

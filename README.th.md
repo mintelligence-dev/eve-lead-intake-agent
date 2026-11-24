@@ -16,6 +16,10 @@
 
 <sub>ข้อมูลในภาพเป็นข้อมูลสมมติ</sub>
 
+deploy แอปตัวอย่างเป็นของคุณเองได้ด้วยปุ่มเดียว ปุ่มจะให้กรอก key ของ Resend อีเมลผู้ส่ง และรหัสเข้าระบบ แล้วตั้งฐานข้อมูล Postgres ให้ ([ทีละขั้น](#ติดตั้งแอปตัวอย่าง))
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension&root-directory=examples%2Flead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=RESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page.%20After%20deploying%2C%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension%23set-up-resend&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+
 ## ใน repo นี้มีอะไร
 
 | | คืออะไร | ใช้ยังไง |
@@ -196,7 +200,7 @@ examples/lead-intake-agent/     แอปตัวอย่าง
 
 ## ร่วมพัฒนา
 
-ยินดีรับ issue และ pull request ก่อนส่ง PR ให้รัน `npm run typecheck`, `npm test` และ `npm run build` ให้ผ่าน ถ้าเป็นการเปลี่ยนแปลงใหญ่ให้เปิด issue คุยกันก่อน ห้าม commit key หรือ `.env.local`
+ยินดีรับ issue และ pull request ก่อนส่ง PR ให้รัน `npm run typecheck`, `npm test` และ `npm run build` ให้ผ่าน ถ้าเป็นการเปลี่ยนแปลงใหญ่ให้เปิด issue คุยกันก่อน ห้าม commit key หรือ `.env.local` ดูกฎทั้งหมดใน [CONTRIBUTING.md](CONTRIBUTING.md) และ [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) · แจ้งช่องโหว่แบบส่วนตัวตาม [SECURITY.md](SECURITY.md)
 
 ## ผู้พัฒนา
 

@@ -1,0 +1,40 @@
+name: Bug report
+description: Something does not work as the README says. English or Thai is fine.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "**Use made-up data.** Do not paste real customer emails, names, phone numbers or companies."
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - eve extension (packages/eve)
+        - Core rules (packages/core)
+        - Example app (examples/lead-intake-agent)
+        - Docs
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: The smallest email (subject, sender, body) and settings that show the problem, with made-up data.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versions
+      description: Package versions, eve version, Node version
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else
