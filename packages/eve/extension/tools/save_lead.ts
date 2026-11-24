@@ -38,7 +38,7 @@ export default defineTool({
       .number()
       .int()
       .optional()
-      .describe("The number on the message's `Lead-Id:` line, if there is one. Omit otherwise."),
+      .describe("The number on the message's `Lead-Id:` line, if there is one. Omit the field entirely otherwise (never send 0)."),
     details: detailsSchema.optional(),
     isSpam: z
       .boolean()
@@ -50,8 +50,10 @@ export default defineTool({
   label: {
     start: ({ fromEmail }) => `Save lead from ${fromEmail}`,
   },
-  async execute({ isSpam, leadId, details: extracted, ...lead }, ctx) {
+  async execute({ isSpam, leadId: rawLeadId, details: extracted, ...lead }, ctx) {
     useMountedConfig();
+    // Models sometimes send 0 for "no Lead-Id line"; only a positive id is real.
+    const leadId = rawLeadId !== undefined && rawLeadId > 0 ? rawLeadId : undefined;
     const status = isSpam ? "spam" : "new";
     const analysis = extracted && !isSpam ? await toAnalysis(extracted) : undefined;
     // Email leads were saved raw before the agent ran; complete that row instead
