@@ -3,8 +3,8 @@ import { isAdmin } from "@/lib/require-admin";
 import { formatLeadDate } from "../status";
 import type { Messages } from "@/lib/i18n/messages";
 import { getI18n } from "@/lib/i18n/server";
-import { LEAD_SCORES, SCORE_LABELS, exportFields, fieldLabel, oneOf, optionLabel } from "@eve-lead-intake/core";
-import type { Lead } from "@eve-lead-intake/eve/desk";
+import { LEAD_SCORES, SCORE_LABELS, exportFields, fieldLabel, oneOf, optionLabel } from "@eve-lead-intake-extension/core";
+import type { Lead } from "@eve-lead-intake-extension/eve/desk";
 import { desk } from "@/lead.desk";
 
 export const dynamic = "force-dynamic";

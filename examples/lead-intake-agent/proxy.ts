@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { SESSION_COOKIE } from "@eve-lead-intake/eve/desk";
+import { SESSION_COOKIE } from "@eve-lead-intake-extension/eve/desk";
 import { desk } from "@/lead.desk";
 
 // Sends visitors without a valid admin session to /login. eve API routes

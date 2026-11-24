@@ -3,8 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { isAdmin } from "@/lib/require-admin";
 import { getI18n } from "@/lib/i18n/server";
-import { LEAD_SCORES, LEAD_STATUSES, aiFields, cleanFieldValues, oneOf, visibleFields, type LeadAnalysis, type LeadField, type LeadStatus } from "@eve-lead-intake/core";
-import type { Lead } from "@eve-lead-intake/eve/desk";
+import { LEAD_SCORES, LEAD_STATUSES, aiFields, cleanFieldValues, oneOf, visibleFields, type LeadAnalysis, type LeadField, type LeadStatus } from "@eve-lead-intake-extension/core";
+import type { Lead } from "@eve-lead-intake-extension/eve/desk";
 import { desk } from "@/lead.desk";
 
 export type ActionResult = { readonly error?: string };

@@ -1,4 +1,4 @@
-import { safeEqual } from "@eve-lead-intake/core";
+import { safeEqual } from "@eve-lead-intake-extension/core";
 import { desk } from "../lead.desk";
 
 // The admin login: ADMIN_USERNAME / ADMIN_PASSWORD from env. Missing login

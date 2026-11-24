@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.67",
-    "@eve-lead-intake/core": "0.1.0",
-    "@eve-lead-intake/eve": "0.1.0",
+    "@eve-lead-intake-extension/core": "0.1.0",
+    "@eve-lead-intake-extension/eve": "0.1.0",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@shikijs/core": "^3.23.0",
     "@shikijs/engine-javascript": "^3.23.0",

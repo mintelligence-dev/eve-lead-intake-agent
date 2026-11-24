@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getI18n } from "@/lib/i18n/server";
-import { SESSION_COOKIE, SESSION_MAX_AGE_SECONDS } from "@eve-lead-intake/eve/desk";
+import { SESSION_COOKIE, SESSION_MAX_AGE_SECONDS } from "@eve-lead-intake-extension/eve/desk";
 import { desk } from "@/lead.desk";
 import { checkCredentials } from "@/lib/credentials";
 

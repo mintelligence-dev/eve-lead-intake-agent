@@ -3,7 +3,7 @@
 import { fmt, type Messages } from "@/lib/i18n/messages";
 import { getI18n } from "@/lib/i18n/server";
 import { OTHER_OPTION, otherInputName } from "./form-fields";
-import { acceptsValue, cleanFieldValues, customerFormFields, fieldLabel, type LeadField } from "@eve-lead-intake/core";
+import { acceptsValue, cleanFieldValues, customerFormFields, fieldLabel, type LeadField } from "@eve-lead-intake-extension/core";
 import { desk } from "@/lead.desk";
 
 export type FormState = {

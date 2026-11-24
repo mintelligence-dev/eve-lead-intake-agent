@@ -2,7 +2,7 @@ import { createResendAdapter } from "@resend/chat-sdk-adapter";
 import type { ResendRawMessage } from "@resend/chat-sdk-adapter";
 import type { Message, Thread } from "chat";
 import { chatSdkChannel } from "eve/channels/chat-sdk";
-import { isAutomatedEmail as isAutomated, leadPrompt } from "@eve-lead-intake/core";
+import { isAutomatedEmail as isAutomated, leadPrompt } from "@eve-lead-intake-extension/core";
 import { redispatchStuckAnalyses } from "../lib/analysis-retry";
 import { createChatState } from "../lib/chat-state";
 import { formUrl } from "../lib/form-token";

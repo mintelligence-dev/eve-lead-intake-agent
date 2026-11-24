@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getI18n } from "@/lib/i18n/server";
 import { LeadForm } from "./lead-form";
-import { customerFormFields } from "@eve-lead-intake/core";
+import { customerFormFields } from "@eve-lead-intake-extension/core";
 import { desk } from "@/lead.desk";
 
 export const dynamic = "force-dynamic";

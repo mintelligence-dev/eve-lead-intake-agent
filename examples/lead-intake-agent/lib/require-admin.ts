@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { SESSION_COOKIE } from "@eve-lead-intake/eve/desk";
+import { SESSION_COOKIE } from "@eve-lead-intake-extension/eve/desk";
 import { desk } from "@/lead.desk";
 
 // Server actions and route handlers are reachable by direct POST/GET, so they

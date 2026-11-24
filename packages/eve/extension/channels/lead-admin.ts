@@ -1,5 +1,5 @@
 import { defineChannel, POST } from "eve/channels";
-import { leadPrompt } from "@eve-lead-intake/core";
+import { leadPrompt } from "@eve-lead-intake-extension/core";
 import { claimAnalysisNow } from "../lib/leads-db";
 import { isAdminRequest } from "../lib/session";
 import { useMountedConfig } from "../lib/shared";

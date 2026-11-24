@@ -1,14 +1,14 @@
-# @eve-lead-intake/eve
+# @eve-lead-intake-extension/eve
 
 An [eve](https://eve.dev) extension that reads inbound customer emails, scores and saves each lead (Hot / Warm / Cold), and replies with a short acknowledgment and a contact-form link. Leads, settings and email thread state live in Postgres; email goes through [Resend](https://resend.com).
 
-> Not published to npm yet. Use it through the [repository's](https://github.com/mintelligence-dev/eve-lead-intake-agent) npm workspace for now.
+> Not published to npm yet. Use it through the [repository's](https://github.com/mintelligence-dev/eve-lead-intake-extension) npm workspace for now.
 
 ## Mount it
 
 ```ts
 // agent/extensions/lead.ts
-import lead from "@eve-lead-intake/eve";
+import lead from "@eve-lead-intake-extension/eve";
 
 export default lead({
   databaseUrl: process.env.DATABASE_URL,
@@ -51,7 +51,7 @@ The file name is the prefix. Mounted as `lead.ts`, the agent gets:
 Code that runs outside the agent, like the web pages that list leads or show the customer form, uses the desk with the same settings:
 
 ```ts
-import { openLeadDesk } from "@eve-lead-intake/eve/desk";
+import { openLeadDesk } from "@eve-lead-intake-extension/eve/desk";
 
 export const desk = openLeadDesk({ databaseUrl, sessionSecret, form });
 

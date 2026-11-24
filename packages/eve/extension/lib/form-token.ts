@@ -1,4 +1,4 @@
-import { createFormToken as sign, type FormTokenCheck, verifyFormToken as verify } from "@eve-lead-intake/core";
+import { createFormToken as sign, type FormTokenCheck, verifyFormToken as verify } from "@eve-lead-intake-extension/core";
 import { appSecret } from "./app-secret";
 import { leadStoreConfig } from "./store-config";
 

@@ -18,8 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { deleteLead, editLead } from "./actions";
 import { useI18n } from "@/lib/i18n/client";
-import { LEAD_STATUSES, SCORE_LABELS, fieldLabel, optionLabel, type LeadField } from "@eve-lead-intake/core";
-import type { Lead } from "@eve-lead-intake/eve/desk";
+import { LEAD_STATUSES, SCORE_LABELS, fieldLabel, optionLabel, type LeadField } from "@eve-lead-intake-extension/core";
+import type { Lead } from "@eve-lead-intake-extension/eve/desk";
 
 type Props = { readonly lead: Lead; readonly fields: readonly LeadField[] };
 

@@ -1,8 +1,8 @@
 import { BotIcon, CheckCircle2Icon, HourglassIcon } from "lucide-react";
 import type { Messages } from "@/lib/i18n/messages";
 import { cn } from "@/lib/utils";
-import { SCORE_LABELS, type LeadScore } from "@eve-lead-intake/core";
-import type { Lead } from "@eve-lead-intake/eve/desk";
+import { SCORE_LABELS, type LeadScore } from "@eve-lead-intake-extension/core";
+import type { Lead } from "@eve-lead-intake-extension/eve/desk";
 
 export const SCORE_STYLES: Record<LeadScore, string> = {
   hot: "bg-red-500/15 text-red-700 dark:text-red-300",

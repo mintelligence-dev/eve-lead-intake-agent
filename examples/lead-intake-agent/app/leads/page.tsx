@@ -14,8 +14,8 @@ import { Pagination } from "./pagination";
 import { formatLeadDate } from "./status";
 import { fmt } from "@/lib/i18n/messages";
 import { getI18n } from "@/lib/i18n/server";
-import { LEAD_SCORES, SCORE_LABELS, fieldLabel, oneOf, optionLabel, tableFields, visibleFields, type LeadField, type LeadScore } from "@eve-lead-intake/core";
-import type { Lead, LeadView } from "@eve-lead-intake/eve/desk";
+import { LEAD_SCORES, SCORE_LABELS, fieldLabel, oneOf, optionLabel, tableFields, visibleFields, type LeadField, type LeadScore } from "@eve-lead-intake-extension/core";
+import type { Lead, LeadView } from "@eve-lead-intake-extension/eve/desk";
 import { desk } from "@/lead.desk";
 
 export const dynamic = "force-dynamic";

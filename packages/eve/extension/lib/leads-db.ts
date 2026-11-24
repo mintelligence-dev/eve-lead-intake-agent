@@ -1,12 +1,12 @@
 import { sql } from "./db";
-import { type DetailsSource, LEAD_SCORES, type LeadAnalysis, type LeadScore, type LeadStatus, oneOf } from "@eve-lead-intake/core";
-import type { LeadFieldValues } from "@eve-lead-intake/core";
+import { type DetailsSource, LEAD_SCORES, type LeadAnalysis, type LeadScore, type LeadStatus, oneOf } from "@eve-lead-intake-extension/core";
+import type { LeadFieldValues } from "@eve-lead-intake-extension/core";
 
 // Lead storage in Postgres (any provider; see db.ts). Shared by the agent's
 // save_lead tool and the /leads page. The table is created on first use so a
 // fresh database (or a "Deploy with Vercel" install) needs no manual migration.
 
-export { LEAD_STATUSES, type LeadStatus } from "@eve-lead-intake/core";
+export { LEAD_STATUSES, type LeadStatus } from "@eve-lead-intake-extension/core";
 
 /**
  * AI analysis of an inbound email. Email leads are saved raw first ("pending")

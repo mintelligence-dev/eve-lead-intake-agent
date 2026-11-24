@@ -3,7 +3,7 @@
 // generated, see app-secret.ts). An unavailable secret fails closed.
 // Checking the username and password is up to the app that shows the login.
 
-import { createSessionToken as sign, verifySessionToken as verify } from "@eve-lead-intake/core";
+import { createSessionToken as sign, verifySessionToken as verify } from "@eve-lead-intake-extension/core";
 import { appSecret } from "./app-secret";
 
 export const SESSION_COOKIE = "lead_admin_session";

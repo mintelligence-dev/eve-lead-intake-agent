@@ -31,7 +31,7 @@ import { useI18n } from "@/lib/i18n/client";
 import { fmt, type Messages } from "@/lib/i18n/messages";
 import { cn } from "@/lib/utils";
 import { resetFieldConfig, saveFieldConfig } from "./actions";
-import { FIELD_TYPES, fieldLabel, optionLabel, type FieldType, type LeadField } from "@eve-lead-intake/core";
+import { FIELD_TYPES, fieldLabel, optionLabel, type FieldType, type LeadField } from "@eve-lead-intake-extension/core";
 
 const typeLabel = (t: Messages, type: FieldType) =>
   ({

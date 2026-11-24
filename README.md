@@ -8,17 +8,17 @@
 [![eve](https://img.shields.io/badge/eve-agent%20framework-black)](https://eve.dev)
 [![AI SDK](https://img.shields.io/badge/AI%20SDK-7-black?logo=vercel)](https://ai-sdk.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![CI](https://github.com/mintelligence-dev/eve-lead-intake-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/mintelligence-dev/eve-lead-intake-agent/actions/workflows/ci.yml)
+[![CI](https://github.com/mintelligence-dev/eve-lead-intake-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/mintelligence-dev/eve-lead-intake-extension/actions/workflows/ci.yml)
 
 [ภาษาไทย](#ภาษาไทย) · [English](#english)
 
 | | คืออะไร · What it is | ใช้ยังไง · How to use it |
 |---|---|---|
 | [`packages/eve`](packages/eve) | eve extension: ช่องทางอีเมล Resend, tool `enrich_sender` / `save_lead`, คำสั่ง AI, งานประจำวัน และ `./desk` ให้หน้าเว็บใช้ · The eve extension: Resend email channel, tools, instructions, daily job, and a `./desk` export for web pages | mount ใน `agent/extensions/` ([ดูวิธี](#ใช้เป็น-extension-ใน-agent-ของคุณ) · [how](#use-it-as-an-eve-extension)) |
-| [`packages/core`](packages/core) | กติกาล้วน ไม่ผูก framework: ฟิลด์ lead, คะแนน, ตรวจเมลอัตโนมัติ, token ที่เซ็นแล้ว · Framework-free rules: lead fields, scores, automated-email check, signed tokens | `import … from "@eve-lead-intake/core"` |
+| [`packages/core`](packages/core) | กติกาล้วน ไม่ผูก framework: ฟิลด์ lead, คะแนน, ตรวจเมลอัตโนมัติ, token ที่เซ็นแล้ว · Framework-free rules: lead fields, scores, automated-email check, signed tokens | `import … from "@eve-lead-intake-extension/core"` |
 | [`examples/lead-intake-agent`](examples/lead-intake-agent) | แอปเต็มที่ใช้ extension นี้: Next.js หน้า Leads, ตั้งค่าฟิลด์, ฟอร์มลูกค้า, หน้าทดสอบ AI · The complete app built on the extension | ปุ่ม Deploy ด้านล่าง · the Deploy button below |
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-agent&root-directory=examples%2Flead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=AI_GATEWAY_API_KEY%2CCONTEXT_API_KEY%2CRESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=AI_GATEWAY_API_KEY%3A%20Vercel%20%3E%20AI%20Gateway%20%3E%20API%20Keys.%20CONTEXT_API_KEY%3A%20context.dev%20dashboard.%20RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page%3B%20afterwards%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-agent%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension&root-directory=examples%2Flead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=AI_GATEWAY_API_KEY%2CCONTEXT_API_KEY%2CRESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=AI_GATEWAY_API_KEY%3A%20Vercel%20%3E%20AI%20Gateway%20%3E%20API%20Keys.%20CONTEXT_API_KEY%3A%20context.dev%20dashboard.%20RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page%3B%20afterwards%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-extension%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
 > ปุ่ม Deploy ใช้ติดตั้งระบบ**แยกของคุณเอง** (key, ฐานข้อมูล และอีเมลของคุณ) · Installs **your own copy** with your own keys, database and email.
 
@@ -54,7 +54,7 @@
 
 ```ts
 // agent/extensions/lead.ts
-import lead from "@eve-lead-intake/eve";
+import lead from "@eve-lead-intake-extension/eve";
 
 export default lead({
   databaseUrl: process.env.DATABASE_URL,
@@ -67,7 +67,7 @@ export default lead({
 
 agent จะได้ `lead__save_lead`, `lead__enrich_sender`, ช่องทาง `lead__resend` (webhook ยังเป็น `/eve/v1/resend`), route "วิเคราะห์ใหม่" และงานประจำวัน · คำสั่ง AI ของ extension บอกแค่ขั้นตอนรับ lead ส่วนตัวตน (identity) ของ agent ยังเป็นของคุณ
 
-หน้าเว็บหรือโค้ดที่ไม่ได้รันใน agent ใช้ `openLeadDesk()` จาก `@eve-lead-intake/eve/desk` ด้วยค่าเดียวกัน (อ่าน/แก้ lead, ฟิลด์, ลิงก์ฟอร์ม, session ผู้ดูแล) ตัวอย่างอยู่ที่ [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) และ [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts) ซึ่งใช้ config ชุดเดียวกับ mount
+หน้าเว็บหรือโค้ดที่ไม่ได้รันใน agent ใช้ `openLeadDesk()` จาก `@eve-lead-intake-extension/eve/desk` ด้วยค่าเดียวกัน (อ่าน/แก้ lead, ฟิลด์, ลิงก์ฟอร์ม, session ผู้ดูแล) ตัวอย่างอยู่ที่ [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) และ [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts) ซึ่งใช้ config ชุดเดียวกับ mount
 
 > ยังไม่ได้เผยแพร่ขึ้น npm ตอนนี้ใช้ได้ผ่าน workspace ใน repo นี้ (ดู[รันในเครื่อง](#รันในเครื่อง))
 
@@ -262,6 +262,11 @@ examples/lead-intake-agent/   แอปเต็ม (ปุ่ม Deploy ติ�
 
 ยินดีรับ issue และ pull request ก่อนส่ง PR ให้รัน `npm run typecheck`, `npm test` และ `npm run build` ให้ผ่าน ถ้าเป็นการเปลี่ยนแปลงใหญ่ ให้เปิด issue คุยกันก่อน · ห้าม commit key หรือ `.env.local`
 
+### ผู้พัฒนา
+
+- [kongkeat](https://github.com/kongkeat): ผู้เขียน Lead Intake Agent เวอร์ชันแรก
+- ทีม M Intelligence
+
 ### สัญญาอนุญาต
 
 เผยแพร่ภายใต้ [MIT License](LICENSE) © 2026 M Intelligence  
@@ -299,7 +304,7 @@ Already have an eve agent? Mount the extension with one file instead of taking t
 
 ```ts
 // agent/extensions/lead.ts
-import lead from "@eve-lead-intake/eve";
+import lead from "@eve-lead-intake-extension/eve";
 
 export default lead({
   databaseUrl: process.env.DATABASE_URL,
@@ -312,7 +317,7 @@ export default lead({
 
 Your agent gets `lead__save_lead`, `lead__enrich_sender`, the `lead__resend` channel (the webhook stays at `/eve/v1/resend`), the re-analyze route and the daily job. The extension's instructions only describe lead intake; your agent keeps its own identity.
 
-Code that runs outside the agent, such as web pages, uses `openLeadDesk()` from `@eve-lead-intake/eve/desk` with the same settings to read and change leads, fields, form links and admin sessions. See [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) and [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts), which share one config with the mount.
+Code that runs outside the agent, such as web pages, uses `openLeadDesk()` from `@eve-lead-intake-extension/eve/desk` with the same settings to read and change leads, fields, form links and admin sessions. See [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) and [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts), which share one config with the mount.
 
 > Not published to npm yet. For now, use it through this repository's workspace (see [Running locally](#running-locally)).
 
@@ -468,6 +473,11 @@ examples/lead-intake-agent/   the complete app (what the Deploy button installs)
 ### Contributing
 
 Issues and pull requests are welcome. Please make sure `npm run typecheck`, `npm test` and `npm run build` pass before opening a PR, and open an issue first for larger changes. Never commit keys or `.env.local`.
+
+### Contributors
+
+- [kongkeat](https://github.com/kongkeat): author of the original Lead Intake Agent
+- The M Intelligence team
 
 ## License
 

@@ -1,4 +1,4 @@
-import { leadPrompt } from "@eve-lead-intake/core";
+import { leadPrompt } from "@eve-lead-intake-extension/core";
 import { claimStuckAnalyses, type StuckAnalysis } from "./leads-db";
 
 export { leadPrompt };

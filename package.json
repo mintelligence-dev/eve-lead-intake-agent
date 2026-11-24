@@ -1,8 +1,8 @@
 {
-  "name": "eve-lead-intake-agent",
+  "name": "eve-lead-intake-extension",
   "version": "0.1.0",
   "private": true,
-  "description": "Workspace for @eve-lead-intake/core, @eve-lead-intake/eve and the example lead intake agent.",
+  "description": "Workspace for @eve-lead-intake-extension/core, @eve-lead-intake-extension/eve and the example lead intake agent.",
   "license": "MIT",
   "workspaces": [
     "packages/core",
@@ -10,11 +10,11 @@
     "examples/lead-intake-agent"
   ],
   "scripts": {
-    "build:core": "npm run build -w @eve-lead-intake/core",
-    "build:eve": "npm run build:core && npm run build -w @eve-lead-intake/eve",
+    "build:core": "npm run build -w @eve-lead-intake-extension/core",
+    "build:eve": "npm run build:core && npm run build -w @eve-lead-intake-extension/eve",
     "build": "npm run build:eve && npm run build -w lead-intake-agent",
     "test": "npm run build:core && vitest run",
-    "typecheck": "npm run build:eve && npm run typecheck -w @eve-lead-intake/core && npm run typecheck -w @eve-lead-intake/eve && npm run typecheck -w lead-intake-agent",
+    "typecheck": "npm run build:eve && npm run typecheck -w @eve-lead-intake-extension/core && npm run typecheck -w @eve-lead-intake-extension/eve && npm run typecheck -w lead-intake-agent",
     "dev": "npm run build:core && npm run dev -w lead-intake-agent"
   },
   "devDependencies": {

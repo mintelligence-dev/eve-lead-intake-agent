@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useI18n } from "@/lib/i18n/client";
-import type { AnalysisStatus } from "@eve-lead-intake/eve/desk";
+import type { AnalysisStatus } from "@eve-lead-intake-extension/eve/desk";
 
 
 // Shown in place of the intent while an email lead's AI analysis is pending or

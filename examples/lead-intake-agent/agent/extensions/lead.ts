@@ -1,4 +1,4 @@
-import lead from "@eve-lead-intake/eve";
+import lead from "@eve-lead-intake-extension/eve";
 
 import { leadIntakeConfig } from "../../lead-intake.config";
 

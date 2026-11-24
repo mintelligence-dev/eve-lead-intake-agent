@@ -1,4 +1,4 @@
-import { DEFAULT_LEAD_FIELDS, fieldListError, type LeadField, normalizeField } from "@eve-lead-intake/core";
+import { DEFAULT_LEAD_FIELDS, fieldListError, type LeadField, normalizeField } from "@eve-lead-intake-extension/core";
 import { deleteSetting, getSetting, setSetting } from "./settings";
 
 // The live lead-field list: what admins saved on /settings/fields, or the

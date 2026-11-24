@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { type FormState, submitLeadForm } from "./actions";
 import { OTHER_OPTION, otherInputName } from "./form-fields";
-import { fieldLabel, optionLabel, type LeadField, type LeadFieldValues } from "@eve-lead-intake/core";
+import { fieldLabel, optionLabel, type LeadField, type LeadFieldValues } from "@eve-lead-intake-extension/core";
 
 const selectClass =
   "h-10 w-full rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:bg-input/30";

@@ -27,8 +27,8 @@ import { useI18n } from "@/lib/i18n/client";
 import { fmt } from "@/lib/i18n/messages";
 import { getLeadResult } from "../leads/actions";
 import { ScoreBadge } from "../leads/lead-badges";
-import { fieldLabel, optionLabel, type LeadField } from "@eve-lead-intake/core";
-import type { Lead } from "@eve-lead-intake/eve/desk";
+import { fieldLabel, optionLabel, type LeadField } from "@eve-lead-intake-extension/core";
+import type { Lead } from "@eve-lead-intake-extension/eve/desk";
 
 // The AI test page: a simulated customer email on top, the agent's work
 // below — live steps while it runs, then the saved analysis and the reply it

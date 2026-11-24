@@ -1,6 +1,6 @@
 import { defineTool } from "eve/tools";
 import { z } from "zod";
-import { aiFields, cleanFieldValues, LEAD_SCORES, type LeadAnalysis } from "@eve-lead-intake/core";
+import { aiFields, cleanFieldValues, LEAD_SCORES, type LeadAnalysis } from "@eve-lead-intake-extension/core";
 import { getLeadFields } from "../lib/field-config";
 import { completeAnalysis, findPendingAnalysis, insertLead } from "../lib/leads-db";
 import { useMountedConfig } from "../lib/shared";

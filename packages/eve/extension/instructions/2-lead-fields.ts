@@ -1,5 +1,5 @@
 import { defineDynamic, defineInstructions } from "eve/instructions";
-import { aiFields, type LeadField } from "@eve-lead-intake/core";
+import { aiFields, type LeadField } from "@eve-lead-intake-extension/core";
 import { getLeadFields } from "../lib/field-config";
 import { useMountedConfig } from "../lib/shared";
 
