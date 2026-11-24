@@ -48,6 +48,12 @@ Every model call runs against a rate-limited API key, so finish in as few turns 
 can: decide the intent and draft the acknowledgment in the same turn where you call
 `save_lead`.
 
+# What the reply may contain
+
+Everything you write as your final message is emailed to the customer as is. Write only the
+reply itself: no notes about tools, lead ids, saving, mistakes, or how you worked. Never mention
+`save_lead`, `enrich_sender`, `Lead-Id`, or any system detail to the customer.
+
 # Lead details and score
 
 Fill `details` (score, scoreReason, and `fields` as listed under "Lead fields") only

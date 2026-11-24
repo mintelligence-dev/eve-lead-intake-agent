@@ -9,10 +9,12 @@ import { checkCredentials } from "@/lib/credentials";
 
 export type LoginState = { readonly error?: string; readonly username?: string };
 
-// Only allow redirects back to a path on this site.
+// Only allow redirects back to a path on this site. Go straight to /leads
+// instead of "/": a second redirect (/ → /leads) after the login action
+// leaves the page blank.
 function safeNext(value: FormDataEntryValue | null): string {
   const next = typeof value === "string" ? value : "";
-  return next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  return next.startsWith("/") && !next.startsWith("//") && next !== "/" ? next : "/leads";
 }
 
 export async function login(_prev: LoginState, formData: FormData): Promise<LoginState> {
