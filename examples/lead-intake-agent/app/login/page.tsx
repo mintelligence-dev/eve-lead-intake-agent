@@ -16,7 +16,7 @@ export default async function LoginPage({
   const { t } = await getI18n();
 
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-background px-4 py-12">
+    <main className="flex min-h-dvh items-center justify-center bg-grouped px-4 py-12">
       <ThemeToggle className="fixed top-3 right-6" />
       <div className="w-full max-w-sm">
         <LoginForm next={next} />

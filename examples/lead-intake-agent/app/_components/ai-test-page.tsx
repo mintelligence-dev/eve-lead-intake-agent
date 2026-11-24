@@ -177,7 +177,7 @@ export function AiTestPage({ sessionId }: { readonly sessionId?: string }) {
   };
 
   return (
-    <main className="min-h-dvh bg-background text-foreground">
+    <main className="min-h-dvh bg-grouped text-foreground">
       <header className="mx-auto flex max-w-2xl items-center justify-between gap-2 px-4 pt-4">
         <Button onClick={() => window.location.assign("/leads")} size="sm" type="button" variant="ghost">
           <SheetIcon className="size-4" />
