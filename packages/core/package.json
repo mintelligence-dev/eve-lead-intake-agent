@@ -2,7 +2,12 @@
   "name": "@eve-lead-intake-extension/core",
   "version": "0.1.0",
   "description": "Lead intake rules without a framework: configurable lead fields, Hot/Warm/Cold scores, automated-email detection, and signed form and session tokens.",
-  "keywords": ["lead", "lead-scoring", "email", "thai"],
+  "keywords": [
+    "lead",
+    "lead-scoring",
+    "email",
+    "thai"
+  ],
   "license": "MIT",
   "author": "M Intelligence",
   "repository": {
@@ -12,7 +17,11 @@
   },
   "type": "module",
   "sideEffects": false,
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -21,7 +30,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^26.6.1",
@@ -29,5 +39,12 @@
   },
   "engines": {
     "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/mintelligence-dev/eve-lead-intake-extension#readme",
+  "bugs": {
+    "url": "https://github.com/mintelligence-dev/eve-lead-intake-extension/issues"
   }
 }

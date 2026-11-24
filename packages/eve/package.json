@@ -2,7 +2,15 @@
   "name": "@eve-lead-intake-extension/eve",
   "version": "0.1.0",
   "description": "eve extension: read inbound customer emails, score and save each lead (Hot/Warm/Cold), and reply automatically with a contact-form link. Postgres + Resend.",
-  "keywords": ["lead", "lead-scoring", "email", "resend", "eve", "agent", "thai"],
+  "keywords": [
+    "lead",
+    "lead-scoring",
+    "email",
+    "resend",
+    "eve",
+    "agent",
+    "thai"
+  ],
   "license": "MIT",
   "author": "M Intelligence",
   "repository": {
@@ -17,7 +25,11 @@
       "dist": "./dist/extension"
     }
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -34,7 +46,8 @@
   },
   "scripts": {
     "build": "eve extension build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "prepublishOnly": "eve extension build"
   },
   "dependencies": {
     "@chat-adapter/state-memory": "^4.45.0",
@@ -57,5 +70,12 @@
   },
   "engines": {
     "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/mintelligence-dev/eve-lead-intake-extension#readme",
+  "bugs": {
+    "url": "https://github.com/mintelligence-dev/eve-lead-intake-extension/issues"
   }
 }
