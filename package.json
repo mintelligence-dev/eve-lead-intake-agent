@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.67",
-    "@chat-adapter/state-memory": "^4.40.0",
-    "@chat-adapter/state-pg": "^4.40.0",
+    "@chat-adapter/state-memory": "^4.45.0",
+    "@chat-adapter/state-pg": "^4.45.0",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@resend/chat-sdk-adapter": "^0.3.0",
     "@shikijs/core": "^3.23.0",
@@ -32,12 +32,12 @@
     "@streamdown/mermaid": "^1.0.2",
     "@tailwindcss/postcss": "^4.3.0",
     "@vercel/connect": "1.0.0",
-    "ai": "^7.0.82",
-    "chat": "^4.40.0",
+    "ai": "^7.0.181",
+    "chat": "^4.45.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
-    "eve": "^0.52.3",
+    "eve": "^1.4.0",
     "exceljs": "^4.4.0",
     "google-auth-library": "^11.0.2",
     "lucide-react": "^1.16.0",
@@ -65,5 +65,8 @@
   },
   "engines": {
     "node": "24.x"
+  },
+  "overrides": {
+    "chat": "$chat"
   }
 }

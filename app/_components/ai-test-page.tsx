@@ -1,6 +1,6 @@
 "use client";
 
-import { type EveDynamicToolPart, type EveMessage, useEveAgent } from "eve/react";
+import { type EveMessage, type EveToolPart, useEveAgent } from "eve/react";
 import {
   AlertCircleIcon,
   CheckCircle2Icon,
@@ -67,10 +67,10 @@ const textOf = (message: EveMessage) =>
 
 type StepState = "waiting" | "running" | "done" | "error" | "skipped";
 
-function toolState(part: EveDynamicToolPart | undefined): StepState | undefined {
+function toolState(part: EveToolPart | undefined): StepState | undefined {
   if (!part) return undefined;
-  if (part.state === "output-available") return "done";
-  if (part.state === "output-error" || part.state === "output-denied") return "error";
+  if (part.state === "completed") return "done";
+  if (part.state === "failed" || part.state === "rejected" || part.state === "cancelled") return "error";
   return "running";
 }
 
@@ -102,25 +102,25 @@ export function AiTestPage({ sessionId }: { readonly sessionId?: string }) {
     if (sessionId === undefined) setDraft(readDraft());
   }, [sessionId]);
 
-  const messages = agent.data.messages;
+  const messages = agent.messages;
   const userMessage = messages.find((message) => message.role === "user");
   const assistantMessages = messages.filter((message) => message.role === "assistant");
   const sentDraft = userMessage ? parsePrompt(textOf(userMessage)) : null;
   const form = sentDraft ?? draft;
 
-  const isBusy = agent.status === "submitted" || agent.status === "streaming";
+  const isBusy = agent.status === "busy";
   const isResuming = agent.status === "resuming";
   const isSent = userMessage !== undefined || isBusy;
   const turnFailure = isBusy || isResuming ? undefined : latestTurnFailure(agent.events, t.test.modelDown);
   const errorMessage = cancelError ?? agent.error?.message ?? turnFailure;
 
   const tools = assistantMessages.flatMap((message) =>
-    message.parts.filter((part): part is EveDynamicToolPart => part.type === "dynamic-tool"),
+    message.parts.filter((part): part is EveToolPart => part.type === "tool"),
   );
-  const enrichPart = tools.findLast((part) => part.toolName.endsWith("enrich_sender"));
-  const savePart = tools.findLast((part) => part.toolName.endsWith("save_lead"));
+  const enrichPart = tools.findLast((part) => part.name.endsWith("enrich_sender"));
+  const savePart = tools.findLast((part) => part.name.endsWith("save_lead"));
   const saved =
-    savePart?.state === "output-available" ? (savePart.output as { id?: number; status?: string }) : undefined;
+    savePart?.state === "completed" ? (savePart.output as { id?: number; status?: string }) : undefined;
   const replyText = assistantMessages.map(textOf).join("\n\n").trim();
   const isSpam = saved?.status === "spam";
 
@@ -395,14 +395,11 @@ function Field({ label, children }: { readonly label: string; readonly children:
 function latestTurnFailure(events: ReturnType<typeof useEveAgent>["events"], modelDown: string): string | undefined {
   for (let index = events.length - 1; index >= 0; index -= 1) {
     const event = events[index];
-    if (event.type === "turn.failed") {
-      return event.data.code === "MODEL_CALL_FAILED"
-        ? modelDown
-        : event.data.message;
+    if (event.type === "turn.settled") {
+      if (event.data.outcome !== "failed") return undefined;
+      return event.data.error?.code === "MODEL_CALL_FAILED" ? modelDown : event.data.error?.message;
     }
-    if (event.type === "turn.completed" || event.type === "turn.cancelled" || event.type === "message.received") {
-      return undefined;
-    }
+    if (event.type === "delivery.consumed") return undefined;
   }
   return undefined;
 }

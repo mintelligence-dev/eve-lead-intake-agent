@@ -3,8 +3,7 @@ import { getLeadFields } from "../lib/field-config";
 import { aiFields, type LeadField } from "../lib/lead-schema";
 
 // Tells the agent which fields to fill in save_lead's `details.fields`, from
-// the live list admins edit on /settings/fields. Resolved when each session
-// starts (one per email), so a saved change applies to the next email without
+// the live list admins edit on /settings/fields. Resolved once per session (one per email), so a saved change applies to the next email without
 // a deploy.
 
 function describe(field: LeadField): string {
@@ -26,26 +25,24 @@ function describe(field: LeadField): string {
 // the customer always follows the customer's language.
 const DATA_LANGUAGE = process.env.LEAD_DATA_LANGUAGE?.trim() || "Thai";
 
-export default defineDynamic({
-  events: {
-    "session.started": async () => {
-      const fields = aiFields(await getLeadFields());
-      return defineInstructions({
-        content: [
-          "# Lead fields",
-          "",
-          `Write free-text values and \`scoreReason\` in ${DATA_LANGUAGE}. Choice values must stay exactly as listed.`,
-          ...(fields.length
-            ? [
-                "",
-                "Put these in `details.fields` (key → text). Use the key exactly as written. Leave a key out",
-                "when the email doesn't say — never guess.",
-                "",
-                ...fields.map(describe),
-              ]
-            : []),
-        ].join("\n"),
-      });
-    },
-  },
+export default defineDynamic(async (ctx) => {
+  // Once per session (one session per email thread), like the old
+  // session.started hook: a saved change applies to the next email.
+  const fields = await ctx.memo(["lead-fields", ctx.session.id], async () => aiFields(await getLeadFields()));
+  return defineInstructions({
+    content: [
+      "# Lead fields",
+      "",
+      `Write free-text values and \`scoreReason\` in ${DATA_LANGUAGE}. Choice values must stay exactly as listed.`,
+      ...(fields.length
+        ? [
+            "",
+            "Put these in `details.fields` (key → text). Use the key exactly as written. Leave a key out",
+            "when the email doesn't say — never guess.",
+            "",
+            ...fields.map(describe),
+          ]
+        : []),
+    ].join("\n"),
+  });
 });
