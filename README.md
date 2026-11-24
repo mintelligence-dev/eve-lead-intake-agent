@@ -8,10 +8,17 @@
 [![eve](https://img.shields.io/badge/eve-agent%20framework-black)](https://eve.dev)
 [![AI SDK](https://img.shields.io/badge/AI%20SDK-7-black?logo=vercel)](https://ai-sdk.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![CI](https://github.com/mintelligence-dev/eve-lead-intake-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/mintelligence-dev/eve-lead-intake-agent/actions/workflows/ci.yml)
 
 [ภาษาไทย](#ภาษาไทย) · [English](#english)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=AI_GATEWAY_API_KEY%2CCONTEXT_API_KEY%2CRESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=AI_GATEWAY_API_KEY%3A%20Vercel%20%3E%20AI%20Gateway%20%3E%20API%20Keys.%20CONTEXT_API_KEY%3A%20context.dev%20dashboard.%20RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page%3B%20afterwards%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-agent%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
+| | คืออะไร · What it is | ใช้ยังไง · How to use it |
+|---|---|---|
+| [`packages/eve`](packages/eve) | eve extension: ช่องทางอีเมล Resend, tool `enrich_sender` / `save_lead`, คำสั่ง AI, งานประจำวัน และ `./desk` ให้หน้าเว็บใช้ · The eve extension: Resend email channel, tools, instructions, daily job, and a `./desk` export for web pages | mount ใน `agent/extensions/` ([ดูวิธี](#ใช้เป็น-extension-ใน-agent-ของคุณ) · [how](#use-it-as-an-eve-extension)) |
+| [`packages/core`](packages/core) | กติกาล้วน ไม่ผูก framework: ฟิลด์ lead, คะแนน, ตรวจเมลอัตโนมัติ, token ที่เซ็นแล้ว · Framework-free rules: lead fields, scores, automated-email check, signed tokens | `import … from "@eve-lead-intake/core"` |
+| [`examples/lead-intake-agent`](examples/lead-intake-agent) | แอปเต็มที่ใช้ extension นี้: Next.js หน้า Leads, ตั้งค่าฟิลด์, ฟอร์มลูกค้า, หน้าทดสอบ AI · The complete app built on the extension | ปุ่ม Deploy ด้านล่าง · the Deploy button below |
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-agent&root-directory=examples%2Flead-intake-agent&project-name=lead-intake-agent&repository-name=lead-intake-agent&env=AI_GATEWAY_API_KEY%2CCONTEXT_API_KEY%2CRESEND_API_KEY%2CRESEND_FROM_ADDRESS%2CADMIN_USERNAME%2CADMIN_PASSWORD&envDescription=AI_GATEWAY_API_KEY%3A%20Vercel%20%3E%20AI%20Gateway%20%3E%20API%20Keys.%20CONTEXT_API_KEY%3A%20context.dev%20dashboard.%20RESEND_API_KEY%3A%20Resend%20%3E%20API%20Keys%20%28Full%20access%29.%20RESEND_FROM_ADDRESS%3A%20onboarding%40resend.dev%20until%20your%20domain%20is%20verified.%20ADMIN_USERNAME%20%2F%20ADMIN_PASSWORD%3A%20the%20web%20login%20you%20choose.%20Postgres%20%28Neon%29%20is%20set%20up%20on%20this%20page%3B%20afterwards%20add%20the%20Resend%20webhook%20%28see%20README%29.&envLink=https%3A%2F%2Fgithub.com%2Fmintelligence-dev%2Feve-lead-intake-agent%23environment-variables&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22neon%22%2C%22productSlug%22%3A%22neon%22%2C%22envVarPrefix%22%3A%22DATABASE%22%2C%22allowConnectExistingProduct%22%3Atrue%7D%5D)
 
 > ปุ่ม Deploy ใช้ติดตั้งระบบ**แยกของคุณเอง** (key, ฐานข้อมูล และอีเมลของคุณ) · Installs **your own copy** with your own keys, database and email.
 
@@ -33,13 +40,36 @@
 | กฎ | บังคับใช้อย่างไร |
 |---|---|
 | AI ล่มแล้ว lead ไม่หาย | บันทึกอีเมลก่อนเรียก AI (`recordInboundEmail()`) · retry แล้วสลับ model สำรอง (`resilientModel()`) · ส่งรายการค้างให้ AI ใหม่ (`redispatchStuckAnalyses()`) · ปุ่ม "วิเคราะห์ใหม่" |
-| AI ไม่ทำตามคำสั่งในอีเมล และไม่ให้ราคาหรือรับปากแทนทีม | `agent/instructions.md` กำหนดให้ถือเนื้อหาอีเมลเป็นข้อมูลที่เชื่อไม่ได้ และตอบรับสั้นๆ อย่างเดียว |
+| AI ไม่ทำตามคำสั่งในอีเมล และไม่ให้ราคาหรือรับปากแทนทีม | `packages/eve/extension/instructions/1-workflow.md` กำหนดให้ถือเนื้อหาอีเมลเป็นข้อมูลที่เชื่อไม่ได้ และตอบรับสั้นๆ อย่างเดียว |
 | AI ไม่เดาข้อมูล | ทุกช่องใน `save_lead` ไม่บังคับ และสั่งให้กรอกเฉพาะที่อีเมลบอก · ข้อมูลที่ลูกค้ายืนยันแล้วไม่ถูก AI เขียนทับ (`completeAnalysis()`) |
 | ไม่ตอบสแปมและบอท | `threadLeadIsSpam()` (ตัดสินรายเธรด) · `isAutomatedEmail()` (header / ผู้ส่ง) · ตอบ follow-up ไม่เกิน 3 ครั้งต่อเธรดต่อวัน |
 | webhook ปลอมไม่ได้ | ตรวจลายเซ็น svix ด้วย `RESEND_WEBHOOK_SECRET` · กันเมลซ้ำด้วย chat state ใน Postgres และ UNIQUE `resend_email_id` |
 | หน้าเว็บต้อง login | คุกกี้เซ็น HMAC อายุ 7 วัน (secret จาก env หรือสุ่มเก็บในฐานข้อมูล ถ้าโหลดไม่ได้ ระบบไม่ให้ login) (`proxy.ts`) และตรวจซ้ำใน server action / route ทุกตัว (`isAdmin()`, `appAuth`) |
 | ลิงก์ฟอร์มลูกค้าปลอมไม่ได้ | token เซ็น HMAC ผูกเลข lead หมดอายุ 14 วัน (`form-token.ts`) · เปิดได้เฉพาะข้อมูลของ lead นั้น |
 | ฐานข้อมูลต่อไม่ได้ ระบบรับเมลไม่ค้าง | chat state สลับไปใช้หน่วยความจำชั่วคราวภายใน 3 วินาที (`resilientState()`) |
+
+### ใช้เป็น extension ใน agent ของคุณ
+
+ถ้ามี eve agent อยู่แล้ว ไม่ต้องใช้ทั้งแอป ติดตั้ง extension แล้วสร้างไฟล์ mount ไฟล์เดียว:
+
+```ts
+// agent/extensions/lead.ts
+import lead from "@eve-lead-intake/eve";
+
+export default lead({
+  databaseUrl: process.env.DATABASE_URL,
+  email: { fromAddress: "leads@mail.example.com", replyTo: "inbox@example.com" },
+  enrichment: { contextApiKey: process.env.CONTEXT_API_KEY! }, // ไม่ใส่ = ข้ามการหาข้อมูลบริษัท
+  form: { baseUrl: "https://leads.example.com" },               // ไม่ใส่ = ไม่แนบลิงก์ฟอร์ม
+  dataLanguage: "Thai",
+});
+```
+
+agent จะได้ `lead__save_lead`, `lead__enrich_sender`, ช่องทาง `lead__resend` (webhook ยังเป็น `/eve/v1/resend`), route "วิเคราะห์ใหม่" และงานประจำวัน · คำสั่ง AI ของ extension บอกแค่ขั้นตอนรับ lead ส่วนตัวตน (identity) ของ agent ยังเป็นของคุณ
+
+หน้าเว็บหรือโค้ดที่ไม่ได้รันใน agent ใช้ `openLeadDesk()` จาก `@eve-lead-intake/eve/desk` ด้วยค่าเดียวกัน (อ่าน/แก้ lead, ฟิลด์, ลิงก์ฟอร์ม, session ผู้ดูแล) ตัวอย่างอยู่ที่ [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) และ [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts) ซึ่งใช้ config ชุดเดียวกับ mount
+
+> ยังไม่ได้เผยแพร่ขึ้น npm ตอนนี้ใช้ได้ผ่าน workspace ใน repo นี้ (ดู[รันในเครื่อง](#รันในเครื่อง))
 
 ### ติดตั้งด้วยปุ่ม Deploy
 
@@ -73,7 +103,7 @@
 | **Prisma Postgres, AWS RDS, ตั้งเอง ฯลฯ** | ตั้ง `DATABASE_URL` เอง ถ้าเจ้านั้นมี connection pooler ให้ใช้ URL ของ pooler |
 
 - **บน Vercel ควรใช้ URL แบบ pooled เสมอ** เพราะแต่ละ function เปิด connection ของตัวเอง ถ้าต่อตรงอาจชนขีดจำกัดจำนวน connection ของฐานข้อมูล
-- **เลือก region ของฐานข้อมูลให้ตรงกับเซิร์ฟเวอร์** `vercel.json` ตั้งให้เซิร์ฟเวอร์รันที่สิงคโปร์ (`sin1`) จึงควรสร้างฐานข้อมูลที่สิงคโปร์ด้วย (Neon: AWS Asia Pacific (Singapore)) ถ้าฐานข้อมูลอยู่ region อื่น ให้แก้ `regions` ใน `vercel.json` ให้ตรงกัน ไม่อย่างนั้นทุก query ต้องวิ่งข้ามทวีป หน้าเว็บจะช้าลงหลายเท่า
+- **เลือก region ของฐานข้อมูลให้ตรงกับเซิร์ฟเวอร์** `examples/lead-intake-agent/vercel.json` ตั้งให้เซิร์ฟเวอร์รันที่สิงคโปร์ (`sin1`) จึงควรสร้างฐานข้อมูลที่สิงคโปร์ด้วย (Neon: AWS Asia Pacific (Singapore)) ถ้าฐานข้อมูลอยู่ region อื่น ให้แก้ `regions` ใน `vercel.json` ให้ตรงกัน ไม่อย่างนั้นทุก query ต้องวิ่งข้ามทวีป หน้าเว็บจะช้าลงหลายเท่า
 - ระบบเข้ารหัสการเชื่อมต่อ (TLS) ให้เอง ยกเว้น `localhost` และเคารพ `sslmode` ใน URL
 - ทดสอบแล้วกับ Neon และกับ Postgres มาตรฐานที่สร้างจากฐานข้อมูลว่าง ส่วน Supabase, Prisma Postgres และ AWS RDS ยังไม่ได้ทดสอบกับบัญชีจริง
 
@@ -109,12 +139,12 @@
 
 **บนหน้าเว็บ:** `/leads` → ปุ่ม **ตั้งค่าฟิลด์** (`/settings/fields`) เพิ่มฟิลด์, แก้ชื่อ ประเภท ตัวเลือก และคำอธิบายให้ AI, เลือกว่าแสดงในตาราง/ฟอร์มลูกค้า/Excel, ลากหรือกดลูกศรเพื่อเรียงลำดับ, ซ่อน/แสดง แล้วกด **บันทึก** มีผลกับอีเมลถัดไป ตาราง ฟอร์มลูกค้า และ Excel ภายในประมาณ 15 วินาที **ไม่ต้อง deploy**
 
-- รายการที่บันทึกเก็บในฐานข้อมูล (ตาราง `app_settings`) ส่วน [`agent/lib/lead-schema.ts`](agent/lib/lead-schema.ts) คือ**ค่าเริ่มต้น**ของระบบที่ติดตั้งใหม่ และใช้กับปุ่ม "คืนค่าเริ่มต้น"
-- AI รับรายการฟิลด์ล่าสุดทุกครั้งที่มีอีเมลใหม่ (`agent/instructions/lead-fields.ts`) และระบบตรวจค่าที่ AI ส่งกลับกับรายการล่าสุดก่อนบันทึก
+- รายการที่บันทึกเก็บในฐานข้อมูล (ตาราง `app_settings`) ส่วน [`packages/core/src/lead-schema.ts`](packages/core/src/lead-schema.ts) คือ**ค่าเริ่มต้น**ของระบบที่ติดตั้งใหม่ และใช้กับปุ่ม "คืนค่าเริ่มต้น"
+- AI รับรายการฟิลด์ล่าสุดทุกครั้งที่มีอีเมลใหม่ (`packages/eve/extension/instructions/2-lead-fields.ts`) และระบบตรวจค่าที่ AI ส่งกลับกับรายการล่าสุดก่อนบันทึก
 - ค่าของฟิลด์เก็บในคอลัมน์ JSON `custom_fields` **เพิ่มหรือลบฟิลด์ได้โดยไม่ต้องแก้โครงสร้างตาราง**
 - **ซ่อน = ไม่ลบข้อมูล** กดแสดงอีกครั้งได้ · รหัสฟิลด์ (key) สร้างให้อัตโนมัติและเปลี่ยนไม่ได้ เปลี่ยนชื่อที่แสดงได้ตามใจ
 - ฟิลด์ใหม่มีผลกับ lead ใหม่ lead เก่าจะว่างในช่องนั้น
-- คะแนน Hot/Warm/Cold และเหตุผลเป็นช่องหลัก ไม่อยู่ในรายการนี้ (เกณฑ์อยู่ใน `agent/instructions.md`)
+- คะแนน Hot/Warm/Cold และเหตุผลเป็นช่องหลัก ไม่อยู่ในรายการนี้ (เกณฑ์อยู่ใน `packages/eve/extension/instructions/1-workflow.md`)
 - เพิ่มฟิลด์ที่ AI กรอกแล้ว ควรลองในหน้าทดสอบ AI ก่อน · ฟิลด์ที่ให้ลูกค้ากรอกเป็นข้อมูลส่วนบุคคลควรอยู่ในข้อความยินยอม PDPA
 
 ### หน้าเว็บ
@@ -144,7 +174,7 @@
 
 ### Environment variables
 
-ดูคำอธิบายครบทุกตัวใน [`.env.example`](.env.example) · **ห้าม commit `.env.local` หรือค่าจริงลง repo**
+ดูคำอธิบายครบทุกตัวใน [`.env.example`](examples/lead-intake-agent/.env.example) · **ห้าม commit `.env.local` หรือค่าจริงลง repo**
 
 | ตัวแปร | จำเป็น | ใช้ทำอะไร |
 |---|---|---|
@@ -171,69 +201,66 @@
 
 ต้องใช้ **Node.js 24**
 
+รันคำสั่งที่โฟลเดอร์บนสุดของ repo (npm workspaces):
+
 ```bash
 npm install
-cp .env.example .env.local   # กรอกค่าจริง
+cp examples/lead-intake-agent/.env.example examples/lead-intake-agent/.env.local   # กรอกค่าจริง
 npm run dev                  # http://localhost:3000 (โหมด dev ไม่ถาม login)
 ```
 
 | คำสั่ง | |
 |---|---|
 | `npm run dev` | เปิดระบบในเครื่อง |
-| `npm run typecheck` | ตรวจ type |
-| `npx eve build` | build ส่วน agent |
-| `npx eve deploy` | deploy ขึ้น Vercel production |
-| `node --env-file=.env.local scripts/demo-stuck-lead.mjs <อีเมล>` | สร้าง lead ค้าง "กำลังวิเคราะห์" ไว้สาธิตปุ่มวิเคราะห์ใหม่ |
+| `npm run typecheck` | ตรวจ type ทั้ง 3 ส่วน |
+| `npm test` | เทสต์ของ `packages/core` |
+| `npm run build` | build core, extension และแอปตัวอย่าง |
+| `npx eve deploy` (ใน `examples/lead-intake-agent`) | deploy ขึ้น Vercel production |
+| `node --env-file=.env.local scripts/demo-stuck-lead.mjs <อีเมล>` (ใน `examples/lead-intake-agent`) | สร้าง lead ค้าง "กำลังวิเคราะห์" ไว้สาธิตปุ่มวิเคราะห์ใหม่ |
 
 ### โครงสร้างโปรเจกต์
 
 ```
-agent/
-  agent.ts                 เลือก model (ค่าจาก lib/model.ts)
-  instructions.md          คำสั่ง AI: ขั้นตอน เกณฑ์คะแนน กติกา
-  instructions/lead-fields.ts  บอก AI รายการฟิลด์ล่าสุดทุกอีเมล
-  tools/                   enrich_sender (context.dev), save_lead (บันทึก + ข้อมูลแยกช่อง)
-  channels/
-    resend.ts              รับเมล / กรอง / ตอบ / แนบลิงก์ฟอร์ม
-    eve.ts                 ช่องทางเว็บ + auth
-    lead-admin.ts          ปุ่ม "วิเคราะห์ใหม่" (POST /eve/v1/lead-admin/reanalyze/:id)
-  lib/
-    model.ts               เลือก model และเส้นทาง (AI Gateway / Gemini ตรง)
-    resilient-model.ts     retry + model สำรอง
-    chat-state.ts          สถานะเธรดอีเมล กันเมลซ้ำ ล็อก (Postgres ตาราง chat_state_*)
-    resilient-state.ts     สลับไปหน่วยความจำเมื่อฐานข้อมูลต่อไม่ได้
-    leads-db.ts            ตาราง leads (สร้าง/อัปเดตอัตโนมัติ)
-    lead-schema.ts         ฟิลด์เริ่มต้นของ lead + ตัวช่วยตรวจค่า
-    field-config.ts        รายการฟิลด์ที่ใช้จริง (จากหน้าตั้งค่า หรือค่าเริ่มต้น)
-    settings.ts            ที่เก็บการตั้งค่า (ตาราง app_settings)
-    lead-details.ts        สถานะและคะแนน Hot/Warm/Cold (ไม่มีโค้ดฐานข้อมูล หน้าเว็บฝั่งเบราว์เซอร์ใช้ได้)
-    analysis-retry.ts      ส่งรายการค้างให้ AI ใหม่
-    form-token.ts          ลิงก์ฟอร์มลูกค้าที่เซ็นกันปลอม
-    auth.ts, session.ts    ระบบ login
-  schedules/daily-maintenance.ts   ทุกวัน 09:00 (เวลาไทย): วิเคราะห์รายการที่ค้าง + ลบ chat state ที่หมดอายุ
-app/
-  leads/                   ตาราง lead, แก้ไข, Export (export/route.ts)
-  f/[token]/               ฟอร์มลูกค้า (สาธารณะ)
-  settings/fields/         หน้าตั้งค่าฟิลด์
-  _components/ai-test-page.tsx   หน้าทดสอบ AI
-  login/                   หน้า login
-lib/i18n/                  ข้อความหน้าเว็บภาษาไทย/อังกฤษ (messages.ts) และตัวเลือกภาษา
-components/language-toggle.tsx   ปุ่ม TH / EN
-proxy.ts                   บังคับ login ก่อนเข้าหน้าเว็บ
-vercel.json                region ของเซิร์ฟเวอร์ (sin1 ตรงกับฐานข้อมูล)
-.env.example               รายชื่อตัวแปรทั้งหมด
+packages/core/src/            กติกาล้วน ไม่มี dependency
+  lead-schema.ts              ฟิลด์เริ่มต้นของ lead + ตัวช่วยตรวจค่า
+  lead-details.ts             สถานะและคะแนน Hot/Warm/Cold
+  automated-email.ts          ตรวจเมลอัตโนมัติ / bounce / mailing list
+  prompt.ts                   รูปแบบข้อความอีเมลที่ส่งให้ AI
+  signing.ts                  token ลิงก์ฟอร์มและคุกกี้ login ที่เซ็นกันปลอม
+packages/eve/extension/       eve extension (mount แล้วได้ชื่อ lead__…)
+  extension.ts                config ทั้งหมดของ extension (zod)
+  instructions/               1-workflow.md ขั้นตอน เกณฑ์คะแนน กติกา · 2-lead-fields.ts รายการฟิลด์ล่าสุด
+  tools/                      enrich_sender (context.dev), save_lead
+  channels/resend.ts          รับเมล / กรอง / ตอบ / แนบลิงก์ฟอร์ม
+  channels/lead-admin.ts      ปุ่ม "วิเคราะห์ใหม่" (POST /eve/v1/lead-admin/reanalyze/:id)
+  schedules/daily-maintenance.ts  ทุกวัน 09:00 (เวลาไทย): วิเคราะห์รายการค้าง + ลบ chat state ที่หมดอายุ
+  lib/desk.ts                 openLeadDesk() สำหรับหน้าเว็บ (export ./desk)
+  lib/leads-db.ts, field-config.ts, settings.ts, chat-state.ts, …   ตาราง leads, ฟิลด์, ตั้งค่า, สถานะเธรด (Postgres)
+examples/lead-intake-agent/   แอปเต็ม (ปุ่ม Deploy ติดตั้งโฟลเดอร์นี้)
+  lead-intake.config.ts       config ชุดเดียว ใช้ทั้ง mount และหน้าเว็บ (อ่านจาก env)
+  lead.desk.ts                desk ของแอปนี้
+  agent/agent.ts              เลือก model + retry + model สำรอง (lib/model.ts, lib/resilient-model.ts)
+  agent/instructions.md       ตัวตนของ agent
+  agent/extensions/lead.ts    mount extension
+  agent/channels/eve.ts       ช่องทางเว็บ + auth
+  app/                        หน้า leads, ฟอร์มลูกค้า f/[token], ตั้งค่าฟิลด์, ทดสอบ AI, login
+  proxy.ts                    บังคับ login ก่อนเข้าหน้าเว็บ
+  vercel.json                 region ของเซิร์ฟเวอร์ (sin1 ตรงกับฐานข้อมูล)
+  .env.example                รายชื่อตัวแปรทั้งหมด
 ```
 
 ### ข้อจำกัด
 
 - **อีเมลขาออก:** ก่อนยืนยันโดเมนใน Resend ระบบส่งเมลตอบได้เฉพาะถึงเจ้าของบัญชี Resend
-- **รองรับ Resend เจ้าเดียว:** โค้ดรับ-ส่งเมลผูกกับ Resend (`agent/channels/resend.ts` ใช้ฟังก์ชันภายในของ `chat` และ `@resend/chat-sdk-adapter` ถ้าอัปเกรดไลบรารีแล้วเมลตอบผิดปกติ ให้ตรวจไฟล์นี้ก่อน)
+- **รองรับ Resend เจ้าเดียว:** โค้ดรับ-ส่งเมลผูกกับ Resend (`packages/eve/extension/channels/resend.ts` ใช้ฟังก์ชันภายในของ `chat` และ `@resend/chat-sdk-adapter` ถ้าอัปเกรดไลบรารีแล้วเมลตอบผิดปกติ ให้ตรวจไฟล์นี้ก่อน)
 - **Login:** บัญชีผู้ดูแลเดียว ยังไม่จำกัดจำนวนครั้งที่กรอกรหัสผิด
-- **ยังไม่มีชุดเทสต์อัตโนมัติใน repo** และยังไม่มีแจ้งเตือนเมื่อระบบมีปัญหา
+- **extension ตั้งต้นจากอีเมล:** mount แล้วได้ช่องทางอีเมล Resend เสมอ (ต้องตั้ง `email.fromAddress` และ key ของ Resend) `save_lead` ใช้จากช่องทางอื่นได้ แต่การตอบกลับและลิงก์ฟอร์มทำงานเฉพาะในอีเมล
+- **ฐานข้อมูลเดียวต่อ process:** mount extension และ `openLeadDesk()` ใน process เดียวกันต้องใช้ `databaseUrl` เดียวกัน
+- **เทสต์อัตโนมัติมีเฉพาะ `packages/core`** ส่วนรับ-ส่งอีเมลและฐานข้อมูลยังทดสอบด้วยมือ และยังไม่มีแจ้งเตือนเมื่อระบบมีปัญหา
 
 ### ร่วมพัฒนา
 
-ยินดีรับ issue และ pull request ก่อนส่ง PR ให้รัน `npm run typecheck` และ `npx eve build` ให้ผ่าน ถ้าเป็นการเปลี่ยนแปลงใหญ่ ให้เปิด issue คุยกันก่อน · ห้าม commit key หรือ `.env.local`
+ยินดีรับ issue และ pull request ก่อนส่ง PR ให้รัน `npm run typecheck`, `npm test` และ `npm run build` ให้ผ่าน ถ้าเป็นการเปลี่ยนแปลงใหญ่ ให้เปิด issue คุยกันก่อน · ห้าม commit key หรือ `.env.local`
 
 ### สัญญาอนุญาต
 
@@ -258,13 +285,36 @@ vercel.json                region ของเซิร์ฟเวอร์ (si
 | Rule | How it is enforced |
 |---|---|
 | A model outage never loses a lead | The email is saved before the agent runs (`recordInboundEmail()`). Transient errors are retried, then a fallback model is used (`resilientModel()`). Stuck analyses are re-run (`redispatchStuckAnalyses()`), or on demand with the Re-analyze button. |
-| The agent ignores instructions inside emails and never quotes prices or makes promises | `agent/instructions.md` treats email content as untrusted data and limits replies to a short acknowledgment. |
+| The agent ignores instructions inside emails and never quotes prices or makes promises | `packages/eve/extension/instructions/1-workflow.md` treats email content as untrusted data and limits replies to a short acknowledgment. |
 | The agent doesn't guess | Every `save_lead` field is optional and filled only from what the email says. Customer-confirmed details are never overwritten by a re-analysis (`completeAnalysis()`). |
 | No replies to spam or bots | `threadLeadIsSpam()` (per thread), `isAutomatedEmail()` (headers and sender), and at most 3 follow-up replies per thread per day. |
 | Forged webhooks are rejected | Svix signatures are checked with `RESEND_WEBHOOK_SECRET`. Duplicates are dropped via the chat state in Postgres and a UNIQUE `resend_email_id`. |
 | The web app requires login | HMAC-signed 7-day session cookie (secret from env or generated into the database; if it can't be loaded, nobody can log in) (`proxy.ts`), re-checked in every server action and route (`isAdmin()`, `appAuth`). |
 | Customer form links can't be forged | HMAC-signed tokens bound to one lead, valid for 14 days (`form-token.ts`). |
 | An unreachable database doesn't hang intake | Chat state falls back to memory within 3 s (`resilientState()`). |
+
+### Use it as an eve extension
+
+Already have an eve agent? Mount the extension with one file instead of taking the whole app:
+
+```ts
+// agent/extensions/lead.ts
+import lead from "@eve-lead-intake/eve";
+
+export default lead({
+  databaseUrl: process.env.DATABASE_URL,
+  email: { fromAddress: "leads@mail.example.com", replyTo: "inbox@example.com" },
+  enrichment: { contextApiKey: process.env.CONTEXT_API_KEY! }, // leave out to skip company lookup
+  form: { baseUrl: "https://leads.example.com" },               // leave out to send no form link
+  dataLanguage: "English",
+});
+```
+
+Your agent gets `lead__save_lead`, `lead__enrich_sender`, the `lead__resend` channel (the webhook stays at `/eve/v1/resend`), the re-analyze route and the daily job. The extension's instructions only describe lead intake; your agent keeps its own identity.
+
+Code that runs outside the agent, such as web pages, uses `openLeadDesk()` from `@eve-lead-intake/eve/desk` with the same settings to read and change leads, fields, form links and admin sessions. See [`lead-intake.config.ts`](examples/lead-intake-agent/lead-intake.config.ts) and [`lead.desk.ts`](examples/lead-intake-agent/lead.desk.ts), which share one config with the mount.
+
+> Not published to npm yet. For now, use it through this repository's workspace (see [Running locally](#running-locally)).
 
 ### Deploying
 
@@ -297,7 +347,7 @@ Any Postgres works; the `leads` table is created and migrated automatically on f
 | **Supabase** (Vercel Marketplace) | The integration sets `POSTGRES_URL` (pooled, port 6543), which is read automatically. |
 | **Prisma Postgres, AWS RDS, self-hosted, …** | Set `DATABASE_URL` yourself; use the provider's pooler URL if it has one. |
 
-**Keep the database and the functions in one region.** `vercel.json` runs the functions in Singapore (`sin1`), so create the database there too (Neon: AWS Asia Pacific (Singapore)), or change `regions` in `vercel.json` to match your database. Otherwise every query crosses an ocean and pages get several times slower.
+**Keep the database and the functions in one region.** `examples/lead-intake-agent/vercel.json` runs the functions in Singapore (`sin1`), so create the database there too (Neon: AWS Asia Pacific (Singapore)), or change `regions` in `vercel.json` to match your database. Otherwise every query crosses an ocean and pages get several times slower.
 
 On Vercel, always use a pooled URL: every function instance opens its own connections. TLS is required except on `localhost`, and `sslmode` in the URL is honored. Tested with Neon and with a stock Postgres starting from an empty database; Supabase, Prisma Postgres and AWS RDS haven't been tried against real accounts yet.
 
@@ -331,7 +381,7 @@ On Vercel the Gateway authenticates with the deployment's OIDC token, so `AI_GAT
 
 **On the web:** `/leads` → **Field settings** (`/settings/fields`). Add fields; edit the label, type, options and the AI description; choose whether each shows in the table, the customer form and Excel; drag or use the arrows to reorder; hide/show; then **Save**. Changes reach the next email, the table, the customer form and Excel within about 15 seconds, **without a deploy**.
 
-The saved list lives in the database (`app_settings`); [`agent/lib/lead-schema.ts`](agent/lib/lead-schema.ts) holds the defaults for new installs and the "reset" button. The agent gets the current list with every new email (`agent/instructions/lead-fields.ts`), and its answers are checked against that list before saving. Values live in the `custom_fields` JSON column, so no migration is needed; hiding a field keeps its data, and field keys are generated and never change (labels can). The Hot/Warm/Cold score is built in (rubric in `agent/instructions.md`). Try new AI fields on the AI test page first.
+The saved list lives in the database (`app_settings`); [`packages/core/src/lead-schema.ts`](packages/core/src/lead-schema.ts) holds the defaults for new installs and the "reset" button. The agent gets the current list with every new email (`packages/eve/extension/instructions/2-lead-fields.ts`), and its answers are checked against that list before saving. Values live in the `custom_fields` JSON column, so no migration is needed; hiding a field keeps its data, and field keys are generated and never change (labels can). The Hot/Warm/Cold score is built in (rubric in `agent/instructions.md`). Try new AI fields on the AI test page first.
 
 ### Pages
 
@@ -348,63 +398,58 @@ The saved list lives in the database (`app_settings`); [`agent/lib/lead-schema.t
 
 ### Environment variables
 
-Every variable is described in [`.env.example`](.env.example). **Never commit `.env.local` or real values.** Required: `DATABASE_URL` (or `POSTGRES_URL`), `CONTEXT_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`, `RESEND_WEBHOOK_SECRET` (without it no email is received), `ADMIN_USERNAME`, `ADMIN_PASSWORD`, plus AI access (`AI_GATEWAY_API_KEY` outside Vercel, or `GOOGLE_GENERATIVE_AI_API_KEY`). Recommended: `RESEND_REPLY_TO`. Optional: `ADMIN_SESSION_SECRET` (generated and stored in the database when unset; changing it logs everyone out and breaks form links already sent), `AI_MODEL`, `AI_FALLBACK_MODEL`, `PUBLIC_APP_URL`, `COMPANY_NAME`, `PRIVACY_POLICY_URL`, `LEAD_FORM_SECRET`, `LEAD_DATA_LANGUAGE` (language of the text the AI writes, default `Thai`), and `SIMULATE_AI_OUTAGE` (demos only). Changes in Vercel take effect after a **Redeploy**.
+Every variable is described in [`.env.example`](examples/lead-intake-agent/.env.example). **Never commit `.env.local` or real values.** Required: `DATABASE_URL` (or `POSTGRES_URL`), `CONTEXT_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`, `RESEND_WEBHOOK_SECRET` (without it no email is received), `ADMIN_USERNAME`, `ADMIN_PASSWORD`, plus AI access (`AI_GATEWAY_API_KEY` outside Vercel, or `GOOGLE_GENERATIVE_AI_API_KEY`). Recommended: `RESEND_REPLY_TO`. Optional: `ADMIN_SESSION_SECRET` (generated and stored in the database when unset; changing it logs everyone out and breaks form links already sent), `AI_MODEL`, `AI_FALLBACK_MODEL`, `PUBLIC_APP_URL`, `COMPANY_NAME`, `PRIVACY_POLICY_URL`, `LEAD_FORM_SECRET`, `LEAD_DATA_LANGUAGE` (language of the text the AI writes, default `Thai`), and `SIMULATE_AI_OUTAGE` (demos only). Changes in Vercel take effect after a **Redeploy**.
 
 ### Running locally
 
 Requires **Node.js 24**.
 
+Run these from the repository root (npm workspaces):
+
 ```bash
 npm install
-cp .env.example .env.local   # fill in real values
+cp examples/lead-intake-agent/.env.example examples/lead-intake-agent/.env.local   # fill in real values
 npm run dev                  # http://localhost:3000 (no login in dev)
 ```
 
 | Command | |
 |---|---|
 | `npm run dev` | Run the app locally |
-| `npm run typecheck` | Type-check |
-| `npx eve build` | Build the agent |
-| `npx eve deploy` | Deploy to Vercel production |
-| `node --env-file=.env.local scripts/demo-stuck-lead.mjs <email>` | Create a lead stuck on "analyzing" to demo the Re-analyze button |
+| `npm run typecheck` | Type-check all three parts |
+| `npm test` | Tests for `packages/core` |
+| `npm run build` | Build core, the extension and the example app |
+| `npx eve deploy` (in `examples/lead-intake-agent`) | Deploy to Vercel production |
+| `node --env-file=.env.local scripts/demo-stuck-lead.mjs <email>` (in `examples/lead-intake-agent`) | Create a lead stuck on "analyzing" to demo the Re-analyze button |
 
 ### Project layout
 
 ```
-agent/
-  agent.ts                 model selection (values from lib/model.ts)
-  instructions.md          agent rules: steps, scoring rubric, guardrails
-  instructions/lead-fields.ts  current field list, sent with every email
-  tools/                   enrich_sender (context.dev), save_lead (save + structured fields)
-  channels/
-    resend.ts              receive / filter / reply / attach the form link
-    eve.ts                 web channel + auth
-    lead-admin.ts          Re-analyze button (POST /eve/v1/lead-admin/reanalyze/:id)
-  lib/
-    model.ts               model and route (AI Gateway / Gemini direct)
-    resilient-model.ts     retry + fallback model
-    chat-state.ts          email thread state, dedupe, locks (Postgres tables chat_state_*)
-    resilient-state.ts     falls back to memory when the database is unreachable
-    leads-db.ts            leads table (created/migrated automatically)
-    lead-schema.ts         default lead fields + value checks
-    field-config.ts        live field list (settings page or defaults)
-    settings.ts            settings store (table app_settings)
-    lead-details.ts        statuses and Hot/Warm/Cold scores (no DB code; safe for the browser)
-    analysis-retry.ts      re-runs stuck analyses
-    form-token.ts          signed customer form links
-    auth.ts, session.ts    login
-  schedules/daily-maintenance.ts   daily at 09:00 Bangkok time: re-run stuck analyses + delete expired chat state
-app/
-  leads/                   leads table, edit, export (export/route.ts)
-  f/[token]/               customer form (public)
-  settings/fields/         field settings page
-  _components/ai-test-page.tsx   AI test page
-  login/                   login page
-lib/i18n/                  Thai/English UI strings (messages.ts) and locale helpers
-components/language-toggle.tsx   TH / EN switch
-proxy.ts                   requires login for the web pages
-vercel.json                function region (sin1, next to the database)
-.env.example               every environment variable
+packages/core/src/            framework-free rules, no dependencies
+  lead-schema.ts              default lead fields + value checks
+  lead-details.ts             statuses and Hot/Warm/Cold scores
+  automated-email.ts          detects auto-replies, bounces, mailing lists
+  prompt.ts                   the email message format the agent reads
+  signing.ts                  signed form-link and login tokens
+packages/eve/extension/       the eve extension (mounted as lead__…)
+  extension.ts                every setting the extension takes (zod)
+  instructions/               1-workflow.md steps, rubric, guardrails · 2-lead-fields.ts the live field list
+  tools/                      enrich_sender (context.dev), save_lead
+  channels/resend.ts          receive / filter / reply / attach the form link
+  channels/lead-admin.ts      Re-analyze button (POST /eve/v1/lead-admin/reanalyze/:id)
+  schedules/daily-maintenance.ts  daily at 09:00 Bangkok: re-run stuck analyses + delete expired chat state
+  lib/desk.ts                 openLeadDesk() for web pages (the ./desk export)
+  lib/leads-db.ts, field-config.ts, settings.ts, chat-state.ts, …   leads, fields, settings, thread state (Postgres)
+examples/lead-intake-agent/   the complete app (what the Deploy button installs)
+  lead-intake.config.ts       one config for the mount and the pages (from env)
+  lead.desk.ts                this app's desk
+  agent/agent.ts              model choice + retry + fallback (lib/model.ts, lib/resilient-model.ts)
+  agent/instructions.md       the agent's identity
+  agent/extensions/lead.ts    mounts the extension
+  agent/channels/eve.ts       web channel + auth
+  app/                        leads, customer form f/[token], field settings, AI test page, login
+  proxy.ts                    requires login for the web pages
+  vercel.json                 function region (sin1, next to the database)
+  .env.example                every environment variable
 ```
 
 ### Tech stack
@@ -414,13 +459,15 @@ vercel.json                function region (sin1, next to the database)
 ### Limitations
 
 - Before your domain is verified in Resend, replies only reach the Resend account owner.
-- Resend is the only supported email provider (`agent/channels/resend.ts` relies on internals of `chat` and `@resend/chat-sdk-adapter`; check it first if replies misbehave after an upgrade).
+- Resend is the only supported email provider (`packages/eve/extension/channels/resend.ts` relies on internals of `chat` and `@resend/chat-sdk-adapter`; check it first if replies misbehave after an upgrade).
 - A single admin account, with no login rate limiting yet.
-- No automated test suite in the repo yet, and no alerting when something breaks.
+- The extension is email-first: mounting it always adds the Resend email channel (it needs `email.fromAddress` and a Resend key). `save_lead` works from other channels, but replies and form links only happen over email.
+- One database per process: an extension mount and `openLeadDesk()` in the same process must use the same `databaseUrl`.
+- Automated tests cover `packages/core` only; email and database paths are tested by hand. No alerting when something breaks.
 
 ### Contributing
 
-Issues and pull requests are welcome. Please make sure `npm run typecheck` and `npx eve build` pass before opening a PR, and open an issue first for larger changes. Never commit keys or `.env.local`.
+Issues and pull requests are welcome. Please make sure `npm run typecheck`, `npm test` and `npm run build` pass before opening a PR, and open an issue first for larger changes. Never commit keys or `.env.local`.
 
 ## License
 

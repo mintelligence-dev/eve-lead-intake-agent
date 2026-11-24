@@ -14,7 +14,7 @@
     "build:eve": "npm run build:core && npm run build -w @eve-lead-intake/eve",
     "build": "npm run build:eve && npm run build -w lead-intake-agent",
     "test": "npm run build:core && vitest run",
-    "typecheck": "npm run build:core && npm run typecheck -w @eve-lead-intake/core && npm run typecheck -w @eve-lead-intake/eve && npm run typecheck -w lead-intake-agent",
+    "typecheck": "npm run build:eve && npm run typecheck -w @eve-lead-intake/core && npm run typecheck -w @eve-lead-intake/eve && npm run typecheck -w lead-intake-agent",
     "dev": "npm run build:core && npm run dev -w lead-intake-agent"
   },
   "devDependencies": {
