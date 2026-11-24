@@ -1,0 +1,61 @@
+{
+  "name": "@eve-lead-intake/eve",
+  "version": "0.1.0",
+  "description": "eve extension: read inbound customer emails, score and save each lead (Hot/Warm/Cold), and reply automatically with a contact-form link. Postgres + Resend.",
+  "keywords": ["lead", "lead-scoring", "email", "resend", "eve", "agent", "thai"],
+  "license": "MIT",
+  "author": "M Intelligence",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mintelligence-dev/eve-lead-intake-agent.git",
+    "directory": "packages/eve"
+  },
+  "type": "module",
+  "eve": {
+    "extension": {
+      "source": "./extension",
+      "dist": "./dist/extension"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./desk": {
+      "types": "./dist/extension/lib/desk.d.ts",
+      "default": "./dist/extension/lib/desk.mjs"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "default": "./dist/tools/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "eve extension build",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@chat-adapter/state-memory": "^4.45.0",
+    "@chat-adapter/state-pg": "^4.45.0",
+    "@eve-lead-intake/core": "0.1.0",
+    "@resend/chat-sdk-adapter": "^0.3.0",
+    "chat": "^4.45.0",
+    "pg": "^8.16.0",
+    "postgres": "^3.4.9",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "@types/pg": "^8.23.1",
+    "eve": "1.4.0",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "eve": "*"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
