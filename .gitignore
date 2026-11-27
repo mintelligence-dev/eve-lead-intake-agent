@@ -12,3 +12,6 @@ dist
 
 # Personal setup notes (kept local)
 SETUP_PROGRESS.txt
+
+# Claude Code launch settings for this machine
+.claude/
