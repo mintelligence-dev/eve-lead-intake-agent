@@ -12,3 +12,9 @@ updates:
     groups:
       # Minor and patch bumps arrive as one pull request; a major gets its own.
       dependencies: { patterns: ['*'], update-types: [minor, patch] }
+    ignore:
+      # Stay on 0.3, the version packages/eve/extension/channels/resend.ts is written for.
+      # In 0.6 getResend() is async and the thread id has no toAddress, which breaks the
+      # reply-to patch and the build. Move up by hand, together with that code.
+      - dependency-name: '@resend/chat-sdk-adapter'
+        versions: ['>=0.4.0']
